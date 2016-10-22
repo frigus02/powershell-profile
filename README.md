@@ -22,3 +22,5 @@ Clone the repository and create a PowerShell profile with the follwing content:
 # Configure project directory for project-helpers module
 Set-ProjectDirectory -Directory "C:\repos"
 ```
+
+To find the location of your profile file, open a PowerShell window and print the variable `$PROFILE`. If the referenced file does not exist yet, just create it. More information can be found in the post [Understanding the six Windows PowerShell profiles](https://blogs.technet.microsoft.com/heyscriptingguy/2012/05/21/understanding-the-six-powershell-profiles/).
