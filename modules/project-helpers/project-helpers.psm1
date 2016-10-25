@@ -59,6 +59,24 @@ function Invoke-NpmStart {
     }
 }
 
+function Invoke-SublimeText {
+    [CmdletBinding()]
+    param (
+        [Parameter(Position=0, Mandatory=$false)]
+        [string] $ProjectName
+    )
+    process
+    {
+        $path = "."
+        if ($ProjectName)
+        {
+            $path = Get-ProjectPath $ProjectName
+        }
+
+        subl $path
+    }
+}
+
 #endregion
 
 
@@ -93,6 +111,7 @@ function TabExpansion
     process
     {
         if ($line -eq "Invoke-NpmStart $lastWord" -or $line -eq "ns $lastWord" -or `
+            $line -eq "Invoke-SublimeText $lastWord" -or $line -eq "s $lastWord" -or `
             $line -eq "Set-Project $lastWord" -or $line -eq "n $lastWord")
         {
             Get-ChildItem (Get-ProjectPath "$lastWord*") | %{ $_.Name } | sort -Unique
@@ -112,12 +131,15 @@ function TabExpansion
 
 Set-Alias -Name n -Value Set-Project
 Set-Alias -Name ns -Value Invoke-NpmStart
+Set-Alias -Name s -Value Invoke-SublimeText
 
 Export-ModuleMember Set-ProjectDirectory
 Export-ModuleMember Set-Project
 Export-ModuleMember Invoke-NpmStart
+Export-ModuleMember Invoke-SublimeText
 Export-ModuleMember TabExpansion
 Export-ModuleMember -Alias n
 Export-ModuleMember -Alias ns
+Export-ModuleMember -Alias s
 
 #endregion
