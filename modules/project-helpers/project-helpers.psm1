@@ -67,13 +67,27 @@ function Invoke-SublimeText {
     )
     process
     {
-        $path = "."
         if ($ProjectName)
         {
             $path = Get-ProjectPath $ProjectName
+            $sublimeProjectFiles = ls $path\*.sublime-project
+            if ($sublimeProjectFiles.Count -eq 1)
+            {
+                $sublimeProject = $sublimeProjectFiles[0].FullName
+                "Opening project $sublimeProject in Sublime Text"
+                subl --project $sublimeProject
+            }
+            else
+            {
+                "Opening path $path in Sublime Text"
+                subl $path
+            }
         }
-
-        subl $path
+        else
+        {
+            "Opening current folder in Sublime Text"
+            subl "."
+        }
     }
 }
 
@@ -110,9 +124,19 @@ function TabExpansion
     )
     process
     {
-        if ($line -eq "Invoke-NpmStart $lastWord" -or $line -eq "ns $lastWord" -or `
-            $line -eq "Invoke-SublimeText $lastWord" -or $line -eq "s $lastWord" -or `
-            $line -eq "Set-Project $lastWord" -or $line -eq "n $lastWord")
+        $commands = @(
+            "Set-ProjectDirectory",
+            "Set-Project",
+            "Invoke-NpmStart",
+            "Invoke-SublimeText",
+            "p",
+            "ns",
+            "edit"
+        )
+
+        $words = $line.Split(" ")
+        $command = $words[0]
+        if ($words.Length -eq 2 -and $commands.Contains($command))
         {
             Get-ChildItem (Get-ProjectPath "$lastWord*") | %{ $_.Name } | sort -Unique
         }
@@ -129,17 +153,17 @@ function TabExpansion
 
 #region Module Interface
 
-Set-Alias -Name n -Value Set-Project
+Set-Alias -Name p -Value Set-Project
 Set-Alias -Name ns -Value Invoke-NpmStart
-Set-Alias -Name s -Value Invoke-SublimeText
+Set-Alias -Name edit -Value Invoke-SublimeText
 
 Export-ModuleMember Set-ProjectDirectory
 Export-ModuleMember Set-Project
 Export-ModuleMember Invoke-NpmStart
 Export-ModuleMember Invoke-SublimeText
 Export-ModuleMember TabExpansion
-Export-ModuleMember -Alias n
+Export-ModuleMember -Alias p
 Export-ModuleMember -Alias ns
-Export-ModuleMember -Alias s
+Export-ModuleMember -Alias edit
 
 #endregion

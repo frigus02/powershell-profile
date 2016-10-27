@@ -8,4 +8,16 @@ function e
     explorer.exe /e,$((Get-Location).Path)
 }
 
+function open
+{
+    if ($args.Length -eq 0)
+    {
+        start "."
+    }
+    else
+    {
+        start $args[0]
+    }
+}
+
 $Env:PATH += ";C:\Program Files\Sublime Text 3"
