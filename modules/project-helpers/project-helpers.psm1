@@ -30,6 +30,18 @@ function Set-ProjectDirectory {
     }
 }
 
+function Set-VisualStudioPath {
+    [CmdletBinding()]
+    param (
+        [Parameter(Position=0, Mandatory=$true)]
+        [string] $Path
+    )
+    process
+    {
+        Set-Variable -Name VISUAL_STUDIO_PATH -Value $Path -Option Constant -Scope Script
+    }
+}
+
 function Set-Project {
     [CmdletBinding()]
     param (
@@ -71,11 +83,18 @@ function Invoke-SublimeText {
         {
             $path = Get-ProjectPath $ProjectName
             $sublimeProjectFiles = ls $path\*.sublime-project
+            $vsProjectFiles = ls $path\*.sln, $path\*\*.sln
             if ($sublimeProjectFiles.Count -eq 1)
             {
                 $sublimeProject = $sublimeProjectFiles[0].FullName
                 "Opening project $sublimeProject in Sublime Text"
                 subl --project $sublimeProject
+            }
+            elseif ($vsProjectFiles.Count -eq 1)
+            {
+                $vsProject = $vsProjectFiles[0].FullName
+                "Opening project $vsProject in Visual Studio"
+                . $VISUAL_STUDIO_PATH $vsProject
             }
             else
             {
@@ -158,6 +177,7 @@ Set-Alias -Name ns -Value Invoke-NpmStart
 Set-Alias -Name edit -Value Invoke-SublimeText
 
 Export-ModuleMember Set-ProjectDirectory
+Export-ModuleMember Set-VisualStudioPath
 Export-ModuleMember Set-Project
 Export-ModuleMember Invoke-NpmStart
 Export-ModuleMember Invoke-SublimeText
