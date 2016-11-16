@@ -71,7 +71,7 @@ function Invoke-NpmStart {
     }
 }
 
-function Invoke-SublimeText {
+function Invoke-EditorForProject {
     [CmdletBinding()]
     param (
         [Parameter(Position=0, Mandatory=$false)]
@@ -79,33 +79,40 @@ function Invoke-SublimeText {
     )
     process
     {
+        $path = "."
         if ($ProjectName)
         {
             $path = Get-ProjectPath $ProjectName
-            $sublimeProjectFiles = ls $path\*.sublime-project
-            $vsProjectFiles = ls $path\*.sln, $path\*\*.sln
-            if ($sublimeProjectFiles.Count -eq 1)
+        }
+
+        $projects = @()
+        $projects += ls $path\*.sublime-project | %{ $_.FullName }
+        $projects += ls $path\*.sln, $path\*\*.sln | %{ $_.FullName }
+        $projects += (Get-Item $path).FullName
+        
+        $project = $projects[0]
+        if ($projects.Count -gt 2)
+        {
+            $project = $projects | Out-GridView -OutputMode Single
+        }
+
+        if ($project)
+        {
+            if ($project.EndsWith(".sublime-project"))
             {
-                $sublimeProject = $sublimeProjectFiles[0].FullName
-                "Opening project $sublimeProject in Sublime Text"
-                subl --project $sublimeProject
+                "Opening project $project in Sublime Text"
+                subl --project $project
             }
-            elseif ($vsProjectFiles.Count -eq 1)
+            elseif ($project.EndsWith(".sln"))
             {
-                $vsProject = $vsProjectFiles[0].FullName
-                "Opening project $vsProject in Visual Studio"
-                . $VISUAL_STUDIO_PATH $vsProject
+                "Opening project $project in Visual Studio"
+                . $VISUAL_STUDIO_PATH $project
             }
             else
             {
-                "Opening path $path in Sublime Text"
-                subl $path
+                "Opening path $project in Sublime Text"
+                subl $project
             }
-        }
-        else
-        {
-            "Opening current folder in Sublime Text"
-            subl "."
         }
     }
 }
@@ -147,7 +154,7 @@ function TabExpansion
             "Set-ProjectDirectory",
             "Set-Project",
             "Invoke-NpmStart",
-            "Invoke-SublimeText",
+            "Invoke-EditorForProject",
             "p",
             "ns",
             "edit"
@@ -174,13 +181,13 @@ function TabExpansion
 
 Set-Alias -Name p -Value Set-Project
 Set-Alias -Name ns -Value Invoke-NpmStart
-Set-Alias -Name edit -Value Invoke-SublimeText
+Set-Alias -Name edit -Value Invoke-EditorForProject
 
 Export-ModuleMember Set-ProjectDirectory
 Export-ModuleMember Set-VisualStudioPath
 Export-ModuleMember Set-Project
 Export-ModuleMember Invoke-NpmStart
-Export-ModuleMember Invoke-SublimeText
+Export-ModuleMember Invoke-EditorForProject
 Export-ModuleMember TabExpansion
 Export-ModuleMember -Alias p
 Export-ModuleMember -Alias ns
