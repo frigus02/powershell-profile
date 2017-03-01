@@ -8,7 +8,6 @@ Install the following modules from the [PowerShell Gallery](https://msconfiggall
 
 ```posh
 Install-Module posh-git
-Install-Module posh-docker
 ```
 
 ## Usage
@@ -25,3 +24,11 @@ Set-VisualStudioPath -Path "C:\ProgramData\Microsoft\Windows\Start Menu\Programs
 ```
 
 To find the location of your profile file, open a PowerShell window and print the variable `$PROFILE`. If the referenced file does not exist yet, just create it. More information can be found in the post [Understanding the six Windows PowerShell profiles](https://blogs.technet.microsoft.com/heyscriptingguy/2012/05/21/understanding-the-six-powershell-profiles/).
+
+## More useful modules
+
+```posh
+Install-Module -Scope CurrentUser posh-docker
+Install-Module -Scope CurrentUser -AllowClobber TabExpansionPlusPlus
+Install-Module -Scope CurrentUser -AllowClobber NPMTabCompletion
+```
