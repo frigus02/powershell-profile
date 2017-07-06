@@ -42,6 +42,18 @@ function Set-VisualStudioPath {
     }
 }
 
+function Set-EditorPath {
+    [CmdletBinding()]
+    param (
+        [Parameter(Position=0, Mandatory=$true)]
+        [string] $Path
+    )
+    process
+    {
+        Set-Variable -Name EDITOR_PATH -Value $Path -Option Constant -Scope Script
+    }
+}
+
 function Set-Project {
     [CmdletBinding()]
     param (
@@ -110,8 +122,8 @@ function Invoke-EditorForProject {
             }
             else
             {
-                "Opening path $project in Sublime Text"
-                subl $project
+                "Opening path $project in Editor"
+                . $EDITOR_PATH $project
             }
         }
     }
@@ -185,6 +197,7 @@ Set-Alias -Name edit -Value Invoke-EditorForProject
 
 Export-ModuleMember Set-ProjectDirectory
 Export-ModuleMember Set-VisualStudioPath
+Export-ModuleMember Set-EditorPath
 Export-ModuleMember Set-Project
 Export-ModuleMember Invoke-NpmStart
 Export-ModuleMember Invoke-EditorForProject
