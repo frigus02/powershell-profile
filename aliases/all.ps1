@@ -19,5 +19,3 @@ function open
         start $args[0]
     }
 }
-
-$Env:PATH += ";C:\Program Files\Sublime Text 3"
