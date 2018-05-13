@@ -9,6 +9,7 @@ Import-Module posh-git
 Import-Module project-helpers
 
 . "$RepoPath\aliases\all.ps1"
+. "$RepoPath\aliases\android.ps1"
 
 $ChocolateyProfile = "$Env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
 if (Test-Path($ChocolateyProfile)) {
