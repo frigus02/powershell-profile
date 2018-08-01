@@ -5,20 +5,8 @@ $RepoPath = Split-Path -Path $ScriptPath -Parent
 $Env:PSModulePath += ";$RepoPath\modules"
 
 # Import modules and scripts
-Import-Module posh-git
 Import-Module project-helpers
+Import-Module posh-git
 
 . "$RepoPath\aliases\all.ps1"
 . "$RepoPath\aliases\android.ps1"
-
-# Prompt
-function global:prompt {
-    $realLASTEXITCODE = $LASTEXITCODE
-
-    Write-Host($pwd.ProviderPath) -nonewline
-
-    Write-VcsStatus
-
-    $global:LASTEXITCODE = $realLASTEXITCODE
-    return "> "
-}
