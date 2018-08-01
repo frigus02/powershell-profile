@@ -29,8 +29,5 @@ To find the location of your profile file, open a PowerShell window and print th
 ## More useful modules
 
 ```posh
-Install-Module -Scope CurrentUser -AllowClobber TabExpansionPlusPlus
-Install-Module -Scope CurrentUser -AllowClobber NPMTabCompletion
-Install-Module -Scope CurrentUser -AllowClobber YarnTabCompletion
 Install-Module -Scope CurrentUser DockerCompletion
 ```
