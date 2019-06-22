@@ -10,3 +10,5 @@ Import-Module posh-git
 
 . "$RepoPath\aliases\all.ps1"
 . "$RepoPath\aliases\android.ps1"
+. "$RepoPath\aliases\clipboard.ps1"
+. "$RepoPath\aliases\js.ps1"
