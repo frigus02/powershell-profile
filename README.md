@@ -31,3 +31,17 @@ To find the location of your profile file, open a PowerShell window and print th
 ```posh
 Install-Module -Scope CurrentUser DockerCompletion
 ```
+
+```posh
+# Install
+Install-Module -Scope CurrentUser PSBashCompletions
+
+# Completions
+((kubectl completion bash) -join "`n") | Set-Content -Encoding ASCII -NoNewline -Path $env:USERPROFILE\Documents\WindowsPowerShell\kubectl_completions.sh
+
+# Use in profile
+Import-Module PSBashCompletions
+Register-BashArgumentCompleter kubectl $env:USERPROFILE\Documents\WindowsPowerShell\kubectl_completions.sh
+Set-Alias k kubectl
+Register-BashArgumentCompleter k $env:USERPROFILE\Documents\WindowsPowerShell\kubectl_completions.sh
+```
