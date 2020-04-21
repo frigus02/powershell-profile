@@ -4,7 +4,7 @@
   "copyOnSelect": true,
   "profiles": {
     "defaults": {
-      "colorScheme": "Campbell",
+      "colorScheme": "Dracula",
       "fontFace": "Cascadia Code",
       "fontSize": 10
     },
@@ -30,7 +30,29 @@
       }
     ]
   },
-  "schemes": [],
+  "schemes": [
+    {
+      "name" : "Dracula",
+      "background" : "#272935",
+      "black" : "#21222C",
+      "blue" : "#BD93F9",
+      "cyan" : "#8BE9FD",
+      "foreground" : "#F8F8F2",
+      "green" : "#50FA7B",
+      "purple" : "#FF79C6",
+      "red" : "#FF5555",
+      "white" : "#F8F8F2",
+      "yellow" : "#FFB86C",
+      "brightBlack" : "#6272A4",
+      "brightBlue" : "#D6ACFF",
+      "brightCyan" : "#A4FFFF",
+      "brightGreen" : "#69FF94",
+      "brightPurple" : "#FF92DF",
+      "brightRed" : "#FF6E6E",
+      "brightWhite" : "#F8F8F2",
+      "brightYellow" : "#FFFFA5"
+    }
+  ],
   "keybindings": [
     { "command": "closePane", "keys": ["ctrl+shift+w"] },
     { "command": "copy", "keys": ["ctrl+c"] },
