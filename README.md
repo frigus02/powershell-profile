@@ -4,10 +4,10 @@ This contains my personal PowerShell profile. It's inspired by Matt McNabb, who 
 
 ## Prerequisites
 
-Install the following modules from the [PowerShell Gallery](https://msconfiggallery.cloudapp.net/):
+Install Starship prompt:
 
 ```posh
-Install-Module posh-git
+scoop install sharship
 ```
 
 ## Usage
@@ -28,9 +28,13 @@ To find the location of your profile file, open a PowerShell window and print th
 
 ## More useful modules
 
+### Docker
+
 ```posh
 Install-Module -Scope CurrentUser DockerCompletion
 ```
+
+### Bash Completions
 
 ```posh
 # Install

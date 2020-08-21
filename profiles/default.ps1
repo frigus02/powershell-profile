@@ -1,12 +1,9 @@
 $ScriptPath = Split-Path -Path $MyInvocation.MyCommand.Definition -Parent
 $RepoPath = Split-Path -Path $ScriptPath -Parent
 
-# Extend the module path to include this repository
+# Modules from this repo
 $Env:PSModulePath += ";$RepoPath\modules"
-
-# Import modules and scripts
 Import-Module project-helpers
-Import-Module posh-git
 
 # Test SSH agent config
 $sshAgent = Get-Service ssh-agent -ErrorAction Ignore
@@ -24,8 +21,12 @@ if ($sshAgent) {
 	}
 }
 
+# Aliases
 . "$RepoPath\aliases\all.ps1"
 . "$RepoPath\aliases\base64.ps1"
 . "$RepoPath\aliases\clipboard.ps1"
 . "$RepoPath\aliases\hyper-v.ps1"
 . "$RepoPath\aliases\js.ps1"
+
+# Prompt
+Invoke-Expression (&starship init powershell)
