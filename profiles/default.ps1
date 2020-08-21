@@ -22,11 +22,12 @@ if ($sshAgent) {
 }
 
 # Aliases
-. "$RepoPath\aliases\all.ps1"
 . "$RepoPath\aliases\base64.ps1"
 . "$RepoPath\aliases\clipboard.ps1"
+. "$RepoPath\aliases\cmd.ps1"
 . "$RepoPath\aliases\hyper-v.ps1"
 . "$RepoPath\aliases\js.ps1"
+. "$RepoPath\aliases\open.ps1"
 
 # Prompt
 Invoke-Expression (&starship init powershell)

@@ -3,23 +3,6 @@ function which
     (Get-Command $args[0]).Source
 }
 
-function e
-{
-    explorer.exe /e,$((Get-Location).Path)
-}
-
-function open
-{
-    if ($args.Length -eq 0)
-    {
-        start "."
-    }
-    else
-    {
-        start $args[0]
-    }
-}
-
 # This is an easy way to call a command with environment
 # variables, as we are used to from unix. Examples:
 # - s NODE_ENV=production node .\server.js
